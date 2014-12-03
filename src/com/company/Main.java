@@ -13,7 +13,7 @@ public class Main {
         HTTPRepository repo = new HTTPRepository("http://dbpedia.org/sparql", "");
         RepositoryConnection connection = repo.getConnection();
 
-        TupleQuery query= connection.prepareTupleQuery(QueryLanguage.SPARQL, "select distinct ?Concept wher {?x a ?Concept} LIMIT 10");
+        TupleQuery query= connection.prepareTupleQuery(QueryLanguage.SPARQL, "select distinct ?Concept where {?x a ?Concept} LIMIT 10");
         TupleQueryResult result=query.evaluate();
         while (result.hasNext()) {
             BindingSet bindset = result.next();
