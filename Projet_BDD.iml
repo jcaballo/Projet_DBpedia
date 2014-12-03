@@ -7,6 +7,6 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="openrdf-sesame-2.7.14-onejar" level="project" />
   </component>
 </module>
-
