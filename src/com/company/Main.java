@@ -22,6 +22,14 @@ public class Main {
             System.out.println(bindset.getValue("Concept"));
         }
 
+        query = connection.prepareTupleQuery(QueryLanguage.SPARQL, "Select ?x ?foafName WHERE {?x <http://xmlns.com/foaf/0.1/name> ?foafName} LIMIT 10");
+        result=query.evaluate();
+        while(result.hasNext()) {
+            BindingSet bindset = result.next();
+            System.out.println(bindset.getValue("foafName"));
+        }
+        connection.close();
+
     }
 
 }
