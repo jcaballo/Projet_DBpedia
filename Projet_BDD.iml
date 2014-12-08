@@ -9,5 +9,6 @@
     <orderEntry type="sourceFolder" forTests="false" />
     <orderEntry type="library" name="openrdf-sesame-2.7.14-onejar" level="project" />
     <orderEntry type="library" name="aopalliance-1.0" level="project" />
+    <orderEntry type="library" name="com.intellij:forms_rt:7.0.3" level="project" />
   </component>
 </module>
