@@ -8,7 +8,7 @@ import org.openrdf.repository.http.HTTPRepository;
 
 public class Main {
 
-    public static void main(String[] args) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
+    /*public static void main(String[] args) throws RepositoryException, MalformedQueryException, QueryEvaluationException {
 
         HTTPRepository repo = new HTTPRepository("http://dbpedia.org/sparql", "");
         RepositoryConnection connection = repo.getConnection();
@@ -30,7 +30,7 @@ public class Main {
         }
         connection.close();
 
-    }
+    }*/
 
 }
 
