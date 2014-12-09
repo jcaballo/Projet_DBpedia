@@ -49,15 +49,18 @@ public class Dbpedia {
                     HTTPRepository repo = new HTTPRepository("http://dbpedia.org/sparql", "");
                     RepositoryConnection connection = repo.getConnection();
 
-                    TupleQuery query = connection.prepareTupleQuery(QueryLanguage.SPARQL, "SELECT DISTINCT ?surname ?givenname ?ab ?date ?img\n" +
+                    TupleQuery query = connection.prepareTupleQuery(QueryLanguage.SPARQL, "SELECT DISTINCT ?surname ?givenname ?itemType ?ab ?date ?img\n" +
                             "                WHERE {\n" +
                             "                    ?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/" + bornInText.getText().toString() + ">. \n" +
                             "                    ?person foaf:givenName ?givenname.\n" +
                             "                            ?person foaf:surname ?surname.\n" +
+                            "                            ?person dbpprop:occupation ?itemType.\n" +
                             "                            ?person dbpedia-owl:abstract ?ab.\n" +
                             "                            ?person dbpedia-owl:birthDate ?date.\n" +
                             "                            ?person dbpedia-owl:thumbnail ?img\n" +
                             "                    FILTER(REGEX(?surname, \"" + nameText.getText().toString() + "\"))\n" +
+                            "                    FILTER(REGEX(?itemType, \"" + itemTypeText.getText().toString() + "\"))\n" +
+                            "                    FILTER(REGEX(?ab, \"" + freeSearchText.getText().toString() + "\"))\n" +
                             "                    FILTER(REGEX(?date, \"" + bornInYearText.getText().toString() + "\"))\n" +
                             "                } ORDER BY ?surname ?givenname LIMIT 1000");
                     TupleQueryResult result = query.evaluate();
