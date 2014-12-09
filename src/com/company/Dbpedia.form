@@ -31,16 +31,8 @@
               </grid>
             </constraints>
             <properties>
-              <text value="start typing"/>
+              <text value=""/>
             </properties>
-          </component>
-          <component id="e3af1" class="javax.swing.JList" binding="itemTypeList">
-            <constraints>
-              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
-            </constraints>
-            <properties/>
           </component>
           <component id="1edb9" class="javax.swing.JLabel">
             <constraints>
@@ -57,16 +49,8 @@
               </grid>
             </constraints>
             <properties>
-              <text value="start typing"/>
+              <text value=""/>
             </properties>
-          </component>
-          <component id="45202" class="javax.swing.JList" binding="bornInList">
-            <constraints>
-              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
-            </constraints>
-            <properties/>
           </component>
           <component id="1454" class="javax.swing.JLabel">
             <constraints>
@@ -83,17 +67,48 @@
               </grid>
             </constraints>
             <properties>
-              <text value="start typing"/>
+              <text value=""/>
             </properties>
           </component>
-          <component id="2d84f" class="javax.swing.JList" binding="nameList">
+          <scrollpane id="dafc7">
             <constraints>
-              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
+              <grid row="2" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
-          </component>
+            <border type="none"/>
+            <children>
+              <component id="e3af1" class="javax.swing.JList" binding="itemTypeList">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+          <scrollpane id="24bd7">
+            <constraints>
+              <grid row="5" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="45202" class="javax.swing.JList" binding="bornInList">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
+          <scrollpane id="82e95">
+            <constraints>
+              <grid row="8" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
+            </constraints>
+            <properties/>
+            <border type="none"/>
+            <children>
+              <component id="2d84f" class="javax.swing.JList" binding="nameList">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
       <grid id="3f531" layout-manager="GridLayoutManager" row-count="2" column-count="1" same-size-horizontally="false" same-size-vertically="false" hgap="-1" vgap="-1">
@@ -140,14 +155,19 @@
               </component>
             </children>
           </grid>
-          <component id="c9b1" class="javax.swing.JList" binding="searchList">
+          <scrollpane id="69651">
             <constraints>
-              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="6" hsize-policy="2" anchor="0" fill="3" indent="0" use-parent-layout="false">
-                <preferred-size width="150" height="50"/>
-              </grid>
+              <grid row="1" column="0" row-span="1" col-span="1" vsize-policy="7" hsize-policy="7" anchor="0" fill="3" indent="0" use-parent-layout="false"/>
             </constraints>
             <properties/>
-          </component>
+            <border type="none"/>
+            <children>
+              <component id="c9b1" class="javax.swing.JList" binding="searchList">
+                <constraints/>
+                <properties/>
+              </component>
+            </children>
+          </scrollpane>
         </children>
       </grid>
     </children>
