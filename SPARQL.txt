@@ -1,0 +1,74 @@
+Recuperer date de deces :
+
+select distinct * where {
+?s rdfs:label "Victor Hugo"@fr.
+?s prop-fr:décès ?p .
+} LIMIT 1
+
+
+select distinct * where {
+?s rdfs:label "Victor Hugo"@fr.
+?s prop-fr:décès ?deces .
+?s prop-fr:dateDeNaissance ?naissance
+} LIMIT 100
+
+Tout les gens de mouvement Baroque
+
+select distinct * where {
+?s rdfs:label "Baroque"@fr .
+?m dbpedia-owl:wikiPageWikiLink ?s .
+?m dbpedia-owl:birthDate ?d
+} LIMIT 10000
+
+
+select distinct * where {
+?s rdfs:label "Baroque"@fr.
+?m dbpedia-owl:wikiPageWikiLink ?s.
+?m dbpedia-owl:birthDate ?d .
+?m prop-fr:nom ?name .
+} LIMIT 10000
+
+Date de naissance
+
+
+// Gens né à Bruxelles
+
+SELECT DISTINCT ?surname ?givenname 
+WHERE { 
+?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/Brussels>. 
+?person foaf:givenName ?givenname. 
+?person foaf:surname ?surname } ORDER BY ?surname ?givenname
+
+
+
+SELECT DISTINCT ?surname ?givenname ?ab
+WHERE { 
+?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/Germany>. 
+?person foaf:givenName ?givenname. 
+?person foaf:surname ?surname.
+?person dbpedia-owl:abstract ?ab.
+FILTER(LANG(?ab) = 'fr')
+} ORDER BY ?surname ?givenname LIMIT 10
+
+
+SELECT DISTINCT ?surname ?givenname ?ab
+WHERE { 
+?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/Germany>. 
+?person foaf:givenName ?givenname. 
+?person foaf:surname ?surname.
+?person dbpedia-owl:abstract ?ab.
+FILTER(REGEX(?ab, "Paris"))
+} ORDER BY ?surname ?givenname LIMIT 10
+
+
+//Gens nee en 1802 et en Germany 
+
+SELECT DISTINCT ?surname ?givenname ?ab ?date
+WHERE { 
+?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/Germany>. 
+?person foaf:givenName ?givenname. 
+?person foaf:surname ?surname.
+?person dbpedia-owl:abstract ?ab.
+?person dbpedia-owl:birthDate ?date
+FILTER(REGEX(?date, "1802"))
+} ORDER BY ?surname ?givenname LIMIT 10
