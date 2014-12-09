@@ -92,13 +92,9 @@ public class Dbpedia {
                     public void valueChanged(ListSelectionEvent evt) {
 
                         infoDialog dialog = null;
-                        try {
-                            dialog = new infoDialog(infosList.get(searchList.getSelectedIndex()));
-                            dialog.pack();
-                            dialog.setVisible(true);
-                        } catch (MalformedURLException e1) {
-                            e1.printStackTrace();
-                        }
+                        dialog = new infoDialog(infosList.get(searchList.getSelectedIndex()));
+                        dialog.pack();
+                        dialog.setVisible(true);
 
                     }
                 });

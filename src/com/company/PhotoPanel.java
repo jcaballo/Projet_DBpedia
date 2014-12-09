@@ -6,7 +6,7 @@ import java.awt.*;
 /**
  * Created by jujulejaffa on 09/12/14.
  */
-public class photoPanel extends JPanel {
+public class PhotoPanel extends JPanel {
 
     public Image getImg() {
         return img;
@@ -18,11 +18,13 @@ public class photoPanel extends JPanel {
 
     private Image img;
 
-    public photoPanel(String img) {
+    public PhotoPanel(){}
+
+    public PhotoPanel(String img) {
         this(new ImageIcon(img).getImage());
     }
 
-    public photoPanel(Image img) {
+    public PhotoPanel(Image img) {
         this.img = img;
         Dimension size = new Dimension(img.getWidth(null), img.getHeight(null));
         setPreferredSize(size);
