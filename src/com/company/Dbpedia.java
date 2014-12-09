@@ -8,9 +8,12 @@ import org.openrdf.repository.RepositoryException;
 import org.openrdf.repository.http.HTTPRepository;
 
 import javax.swing.*;
+import javax.swing.event.ListSelectionEvent;
+import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.util.ArrayList;
 
 /**
  * Created by bob on 08/12/14.
@@ -31,8 +34,11 @@ public class Dbpedia {
     private JList bornInYearList;
 
     private DefaultListModel listModel;
+    private ArrayList<ArrayList<String>> infosList;
 
     public Dbpedia() {
+
+        infosList = new ArrayList<ArrayList<String>>();
 
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
@@ -43,13 +49,14 @@ public class Dbpedia {
                     HTTPRepository repo = new HTTPRepository("http://dbpedia.org/sparql", "");
                     RepositoryConnection connection = repo.getConnection();
 
-                    TupleQuery query = connection.prepareTupleQuery(QueryLanguage.SPARQL, "SELECT DISTINCT ?surname ?givenname ?ab ?date\n" +
+                    TupleQuery query = connection.prepareTupleQuery(QueryLanguage.SPARQL, "SELECT DISTINCT ?surname ?givenname ?ab ?date ?img\n" +
                             "                WHERE {\n" +
                             "                    ?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/" + bornInText.getText().toString() + ">. \n" +
                             "                    ?person foaf:givenName ?givenname.\n" +
                             "                            ?person foaf:surname ?surname.\n" +
                             "                            ?person dbpedia-owl:abstract ?ab.\n" +
-                            "                            ?person dbpedia-owl:birthDate ?date\n" +
+                            "                            ?person dbpedia-owl:birthDate ?date.\n" +
+                            "                            ?person dbpedia-owl:thumbnail ?img\n" +
                             "                    FILTER(REGEX(?date, \"" + bornInYearText.getText().toString() + "\"))\n" +
                             "                } ORDER BY ?surname ?givenname LIMIT 1000");
                     TupleQueryResult result = query.evaluate();
@@ -58,6 +65,14 @@ public class Dbpedia {
                         System.out.println(bindset);
                         System.out.println("Concept :");
                         listModel.addElement(bindset.getValue("surname") + "/" + bindset.getValue("givenname"));
+                        ArrayList<String> bob = new ArrayList<String>();
+                        bob.add(bindset.getValue("surname") + "");
+                        bob.add(bindset.getValue("givenname") + "");
+                        bob.add(bindset.getValue("ab") + "");
+                        bob.add(bindset.getValue("date") + "");
+                        bob.add(bindset.getValue("img") + "");
+                        infosList.add(bob);
+
                     }
                 } catch (RepositoryException e1) {
                     e1.printStackTrace();
@@ -68,7 +83,17 @@ public class Dbpedia {
                 }
 
                 searchList.setModel(listModel);
+                searchList.addListSelectionListener(new ListSelectionListener() {
+                    public void valueChanged(ListSelectionEvent evt) {
+                        if (evt.getValueIsAdjusting())
+                            return;
+                        System.out.println("Selected from " + evt.getFirstIndex() + " to " + evt.getLastIndex());
 
+                        infoDialog dialog = new infoDialog(infosList.get(searchList.getSelectedIndex()));
+                        dialog.pack();
+                        dialog.setVisible(true);
+                    }
+                });
             }
         });
     }
