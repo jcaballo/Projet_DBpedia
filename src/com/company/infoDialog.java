@@ -11,12 +11,11 @@ import java.util.ArrayList;
 public class infoDialog extends JDialog {
     private JPanel contentPane;
     private JButton buttonOK;
-    private JTextField abstractText;
+    private JTextArea abstractText;
     private JTextField birthText;
     private JTextField lastNameText;
     private JTextField firstNameText;
     private JTextField photoText;
-    private JTextArea abstracText;
     private JButton buttonCancel;
 
     public infoDialog(ArrayList<String> infos) {
@@ -113,8 +112,11 @@ public class infoDialog extends JDialog {
         final JLabel label5 = new JLabel();
         label5.setText("Photo URL");
         panel3.add(label5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        abstracText = new JTextArea();
-        panel3.add(abstracText, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(150, 50), null, 0, false));
+        abstractText = new JTextArea();
+        abstractText.setColumns(50);
+        abstractText.setLineWrap(true);
+        abstractText.setWrapStyleWord(true);
+        panel3.add(abstractText, new GridConstraints(4, 1, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_WANT_GROW, null, new Dimension(500, 500), null, 0, false));
     }
 
     /**

@@ -38,10 +38,10 @@ public class Dbpedia {
 
     public Dbpedia() {
 
-        infosList = new ArrayList<ArrayList<String>>();
-
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
+
+                infosList = new ArrayList<ArrayList<String>>();
 
                 listModel = new DefaultListModel();
 
@@ -57,6 +57,7 @@ public class Dbpedia {
                             "                            ?person dbpedia-owl:abstract ?ab.\n" +
                             "                            ?person dbpedia-owl:birthDate ?date.\n" +
                             "                            ?person dbpedia-owl:thumbnail ?img\n" +
+                            "                    FILTER(REGEX(?surname, \"" + nameText.getText().toString() + "\"))\n" +
                             "                    FILTER(REGEX(?date, \"" + bornInYearText.getText().toString() + "\"))\n" +
                             "                } ORDER BY ?surname ?givenname LIMIT 1000");
                     TupleQueryResult result = query.evaluate();
@@ -85,9 +86,6 @@ public class Dbpedia {
                 searchList.setModel(listModel);
                 searchList.addListSelectionListener(new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent evt) {
-                        if (evt.getValueIsAdjusting())
-                            return;
-                        System.out.println("Selected from " + evt.getFirstIndex() + " to " + evt.getLastIndex());
 
                         infoDialog dialog = new infoDialog(infosList.get(searchList.getSelectedIndex()));
                         dialog.pack();
