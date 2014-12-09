@@ -13,6 +13,7 @@ import javax.swing.event.ListSelectionListener;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.net.MalformedURLException;
 import java.util.ArrayList;
 
 /**
@@ -90,9 +91,15 @@ public class Dbpedia {
                 searchList.addListSelectionListener(new ListSelectionListener() {
                     public void valueChanged(ListSelectionEvent evt) {
 
-                        infoDialog dialog = new infoDialog(infosList.get(searchList.getSelectedIndex()));
-                        dialog.pack();
-                        dialog.setVisible(true);
+                        infoDialog dialog = null;
+                        try {
+                            dialog = new infoDialog(infosList.get(searchList.getSelectedIndex()));
+                            dialog.pack();
+                            dialog.setVisible(true);
+                        } catch (MalformedURLException e1) {
+                            e1.printStackTrace();
+                        }
+
                     }
                 });
             }

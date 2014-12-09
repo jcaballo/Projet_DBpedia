@@ -6,6 +6,8 @@ import com.intellij.uiDesigner.core.GridLayoutManager;
 import javax.swing.*;
 import java.awt.*;
 import java.awt.event.*;
+import java.net.MalformedURLException;
+import java.net.URL;
 import java.util.ArrayList;
 
 public class infoDialog extends JDialog {
@@ -15,10 +17,10 @@ public class infoDialog extends JDialog {
     private JTextField birthText;
     private JTextField lastNameText;
     private JTextField firstNameText;
-    private JTextField photoText;
-    private JButton buttonCancel;
+    private JPanel panelPhoto;
+    private String photoText;
 
-    public infoDialog(ArrayList<String> infos) {
+    public infoDialog(ArrayList<String> infos) throws MalformedURLException {
         setContentPane(contentPane);
         setModal(true);
         getRootPane().setDefaultButton(buttonOK);
@@ -27,8 +29,7 @@ public class infoDialog extends JDialog {
         lastNameText.setText(infos.get(1));
         abstractText.setText(infos.get(2));
         birthText.setText(infos.get(3));
-        photoText.setText(infos.get(4));
-
+        photoText = infos.get(4);
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
                 onOK();
@@ -107,8 +108,6 @@ public class infoDialog extends JDialog {
         final JLabel label4 = new JLabel();
         label4.setText("Abstract");
         panel3.add(label4, new GridConstraints(4, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
-        photoText = new JTextField();
-        panel3.add(photoText, new GridConstraints(0, 1, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_HORIZONTAL, GridConstraints.SIZEPOLICY_WANT_GROW, GridConstraints.SIZEPOLICY_FIXED, null, new Dimension(150, -1), null, 0, false));
         final JLabel label5 = new JLabel();
         label5.setText("Photo URL");
         panel3.add(label5, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_WEST, GridConstraints.FILL_NONE, GridConstraints.SIZEPOLICY_FIXED, GridConstraints.SIZEPOLICY_FIXED, null, null, null, 0, false));
@@ -124,5 +123,12 @@ public class infoDialog extends JDialog {
      */
     public JComponent $$$getRootComponent$$$() {
         return contentPane;
+    }
+
+
+    private void createUIComponents() {
+        panelPhoto=new photoPanel("http://www.online-image-editor.com/styles/2013/images/example_image.png");
+        panelPhoto.setVisible(true);
+
     }
 }
