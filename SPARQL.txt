@@ -2,13 +2,13 @@ Recuperer date de deces :
 
 select distinct * where {
 ?s rdfs:label "Victor Hugo"@fr.
-?s prop-fr:décès ?p .
+?s prop-fr:deces ?p .
 } LIMIT 1
 
 
 select distinct * where {
 ?s rdfs:label "Victor Hugo"@fr.
-?s prop-fr:décès ?deces .
+?s prop-fr:deces ?deces .
 ?s prop-fr:dateDeNaissance ?naissance
 } LIMIT 100
 
@@ -31,7 +31,7 @@ select distinct * where {
 Date de naissance
 
 
-// Gens né à Bruxelles
+// Gens nï¿½ ï¿½ Bruxelles
 
 SELECT DISTINCT ?surname ?givenname 
 WHERE { 
