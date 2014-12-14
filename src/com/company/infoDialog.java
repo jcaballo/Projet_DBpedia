@@ -32,7 +32,7 @@ public class infoDialog extends JDialog {
         lastNameText.setText(infos.get(1));
         abstractText.setText(infos.get(2));
         birthText.setText(infos.get(3));
-
+/*
         URL url;
         Image image = null;
         try {
@@ -45,7 +45,7 @@ public class infoDialog extends JDialog {
 
         panelPhoto = new PhotoPanel(image);
         bobPanel.add(panelPhoto, new GridConstraints(0, 0, 1, 1, GridConstraints.ANCHOR_CENTER, GridConstraints.FILL_BOTH, GridConstraints.SIZEPOLICY_CAN_SHRINK | GridConstraints.SIZEPOLICY_CAN_GROW, 1, null, null, null, 0, false));
-
+*/
 
         buttonOK.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {

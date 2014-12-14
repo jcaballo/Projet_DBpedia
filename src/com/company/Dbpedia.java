@@ -2,6 +2,7 @@ package com.company;
 
 import com.intellij.uiDesigner.core.GridConstraints;
 import com.intellij.uiDesigner.core.GridLayoutManager;
+import com.mongodb.*;
 import org.openrdf.query.*;
 import org.openrdf.repository.RepositoryConnection;
 import org.openrdf.repository.RepositoryException;
@@ -14,6 +15,7 @@ import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.net.MalformedURLException;
+import java.net.UnknownHostException;
 import java.util.ArrayList;
 
 /**
@@ -36,14 +38,29 @@ public class Dbpedia {
 
     private DefaultListModel listModel;
     private ArrayList<ArrayList<String>> infosList;
+    private Mongo mongo;
+    private DefaultListModel listItemTypeModel;
+    private DefaultListModel listBornInModel;
+    private DefaultListModel listBornInYearModel;
+    private DefaultListModel listNameModel;
 
     public Dbpedia() {
+
+        try {
+            mongo = new Mongo("localhost", 27017);
+        } catch (UnknownHostException e1) {
+            e1.printStackTrace();
+        }
+
+        fillLists();
 
         searchButton.addActionListener(new ActionListener() {
             public void actionPerformed(ActionEvent e) {
 
-                infosList = new ArrayList<ArrayList<String>>();
+                fillMongo();
+                fillLists();
 
+                infosList = new ArrayList<ArrayList<String>>();
                 listModel = new DefaultListModel();
 
                 try {
@@ -92,12 +109,159 @@ public class Dbpedia {
                     public void valueChanged(ListSelectionEvent evt) {
 
                         infoDialog dialog = null;
-                        dialog = new infoDialog(infosList.get(searchList.getSelectedIndex()));
+                        dialog = new infoDialog(infosList.get(((JList) evt.getSource()).getSelectedIndex()));
                         dialog.pack();
                         dialog.setVisible(true);
-
+                        dialog.setDefaultCloseOperation(WindowConstants.DISPOSE_ON_CLOSE);
+                        ((JList) evt.getSource()).clearSelection();
                     }
                 });
+            }
+        });
+    }
+
+    public void fillMongo(){
+
+        DB db = mongo.getDB("DbPediaSearch");
+        DBCollection table = null;
+        BasicDBObject document = null;
+        DBCursor cursor = null;
+        boolean insert = true;
+
+        if (!itemTypeText.getText().equals("")) {
+            table = db.getCollection("itemType");
+            cursor = table.find();
+            while (cursor.hasNext()) {
+                if (cursor.next().get("item").toString().equals(itemTypeText.getText())){
+                    insert = false;
+                    break;
+                }
+            }
+            if (insert) {
+                document = new BasicDBObject();
+                document.put("item", itemTypeText.getText() + "");
+                table.insert(document);
+            }
+        }
+
+        insert = true;
+        if (!bornInText.getText().equals("")) {
+            table = db.getCollection("bornIn");
+            cursor = table.find();
+            while (cursor.hasNext()) {
+                if (cursor.next().get("item").toString().equals(bornInText.getText())){
+                    insert = false;
+                    break;
+                }
+            }
+            if (insert) {
+                document = new BasicDBObject();
+                document.put("item", bornInText.getText() + "");
+                table.insert(document);
+            }
+        }
+
+        insert = true;
+        if (!bornInYearText.getText().equals("")) {
+            table = db.getCollection("bornInYear");
+            cursor = table.find();
+            while (cursor.hasNext()) {
+                if (cursor.next().get("item").toString().equals(bornInYearText.getText())){
+                    insert = false;
+                    break;
+                }
+            }
+            if (insert) {
+                document = new BasicDBObject();
+                document.put("item", bornInYearText.getText() + "");
+                table.insert(document);
+            }
+        }
+
+        insert = true;
+        if (!nameText.getText().equals("")) {
+            table = db.getCollection("name");
+            cursor = table.find();
+            while (cursor.hasNext()) {
+                if (cursor.next().get("item").toString().equals(nameText.getText())){
+                    insert = false;
+                    break;
+                }
+            }
+            if (insert) {
+                document = new BasicDBObject();
+                document.put("item", nameText.getText() + "");
+                table.insert(document);
+            }
+        }
+    }
+
+    public void fillLists(){
+
+        DB db = mongo.getDB("DbPediaSearch");
+        listItemTypeModel = new DefaultListModel();
+        listBornInModel = new DefaultListModel();
+        listBornInYearModel = new DefaultListModel();
+        listNameModel = new DefaultListModel();
+
+        DBCollection table = db.getCollection("itemType");
+        DBCursor cursor = table.find();
+        while (cursor.hasNext()) {
+            listItemTypeModel.addElement(cursor.next().get("item").toString());
+        }
+
+        table = db.getCollection("bornIn");
+        cursor = table.find();
+        while (cursor.hasNext()) {
+            listBornInModel.addElement(cursor.next().get("item").toString());
+        }
+
+        table = db.getCollection("bornInYear");
+        cursor = table.find();
+        while (cursor.hasNext()) {
+            listBornInYearModel.addElement(cursor.next().get("item").toString());
+        }
+
+        table = db.getCollection("name");
+        cursor = table.find();
+        while (cursor.hasNext()) {
+            listNameModel.addElement(cursor.next().get("item").toString());
+        }
+
+        itemTypeList.setModel(listItemTypeModel);
+        bornInList.setModel(listBornInModel);
+        bornInYearList.setModel(listBornInYearModel);
+        nameList.setModel(listNameModel);
+
+        itemTypeList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent evt) {
+
+                itemTypeText.setText( ((JList) evt.getSource()).getSelectedValue().toString() );
+                ((JList) evt.getSource()).clearSelection();
+            }
+        });
+
+        bornInList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent evt) {
+
+                bornInText.setText( ((JList) evt.getSource()).getSelectedValue().toString() );
+                ((JList) evt.getSource()).clearSelection();
+            }
+        });
+
+        bornInYearList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent evt) {
+
+                bornInYearText.setText(((JList) evt.getSource()).getSelectedValue().toString());
+                ((JList) evt.getSource()).clearSelection();
+            }
+        });
+
+        nameList.addListSelectionListener(new ListSelectionListener() {
+            public void valueChanged(ListSelectionEvent evt) {
+
+                nameText.setText( ((JList) evt.getSource()).getSelectedValue().toString() );
+                ((JList) evt.getSource()).clearSelection();
             }
         });
     }
