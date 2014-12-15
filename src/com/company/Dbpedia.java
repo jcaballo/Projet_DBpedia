@@ -69,7 +69,6 @@ public class Dbpedia {
 
                     TupleQuery query = connection.prepareTupleQuery(QueryLanguage.SPARQL, "SELECT DISTINCT ?surname ?givenname ?birthplace ?itemType ?ab ?date ?img\n" +
                             "                WHERE {\n" +
-                            "                    ?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/France>. \n" +
                             "                    ?person foaf:givenName ?givenname.\n" +
                             "                            ?person foaf:surname ?surname.\n" +
                             "                            ?person dbpedia-owl:birthPlace ?birthplace.\n" +
