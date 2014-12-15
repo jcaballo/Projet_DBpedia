@@ -67,20 +67,23 @@ public class Dbpedia {
                     HTTPRepository repo = new HTTPRepository("http://dbpedia.org/sparql", "");
                     RepositoryConnection connection = repo.getConnection();
 
-                    TupleQuery query = connection.prepareTupleQuery(QueryLanguage.SPARQL, "SELECT DISTINCT ?surname ?givenname ?itemType ?ab ?date ?img\n" +
+                    TupleQuery query = connection.prepareTupleQuery(QueryLanguage.SPARQL, "SELECT DISTINCT ?surname ?givenname ?birthplace ?itemType ?ab ?date ?img\n" +
                             "                WHERE {\n" +
-                            "                    ?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/" + bornInText.getText().toString() + ">. \n" +
+                            "                    ?person dbpedia-owl:birthPlace <http://dbpedia.org/resource/France>. \n" +
                             "                    ?person foaf:givenName ?givenname.\n" +
                             "                            ?person foaf:surname ?surname.\n" +
+                            "                            ?person dbpedia-owl:birthPlace ?birthplace.\n" +
                             "                            ?person dbpprop:occupation ?itemType.\n" +
                             "                            ?person dbpedia-owl:abstract ?ab.\n" +
                             "                            ?person dbpedia-owl:birthDate ?date.\n" +
                             "                            ?person dbpedia-owl:thumbnail ?img\n" +
                             "                    FILTER(REGEX(?surname, \"" + nameText.getText().toString() + "\"))\n" +
+                            "                    FILTER(REGEX(?birthplace, \"" + bornInText.getText().toString() + "\"))\n" +
                             "                    FILTER(REGEX(?itemType, \"" + itemTypeText.getText().toString() + "\"))\n" +
                             "                    FILTER(REGEX(?ab, \"" + freeSearchText.getText().toString() + "\"))\n" +
                             "                    FILTER(REGEX(?date, \"" + bornInYearText.getText().toString() + "\"))\n" +
-                            "                } ORDER BY ?surname ?givenname LIMIT 1000");
+                            "                    FILTER(LANG(?ab) = 'fr' )\n" +
+                            "                } ORDER BY ?surname ?givenname");
                     TupleQueryResult result = query.evaluate();
                     while (result.hasNext()) {
                         BindingSet bindset = result.next();
